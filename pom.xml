@@ -11,8 +11,8 @@
 
     <modules>
         <module>laxio-api</module>
-        <module>laxio-protocol-api</module>
         <module>laxio-server</module>
         <module>laxio-client</module>
+        <module>laxio-protocol-parent</module>
     </modules>
 </project>

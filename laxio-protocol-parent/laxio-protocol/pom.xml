@@ -5,11 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>laxio-parent</artifactId>
         <groupId>org.laxio</groupId>
+        <artifactId>laxio-protocol-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>laxio-protocol-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>laxio-protocol</artifactId>
 </project>

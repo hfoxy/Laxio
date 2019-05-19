@@ -10,6 +10,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>laxio-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>laxio-protocol-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>laxio-protocol-api</module>
+        <module>laxio-protocol</module>
+    </modules>
 </project>
