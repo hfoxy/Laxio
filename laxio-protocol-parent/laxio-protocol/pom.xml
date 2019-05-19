@@ -11,4 +11,5 @@
     </parent>
 
     <artifactId>laxio-protocol</artifactId>
+    <version>1.14.1-SNAPSHOT</version>
 </project>
