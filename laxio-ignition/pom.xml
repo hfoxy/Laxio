@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.laxio</groupId>
+        <artifactId>laxio-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>laxio-ignition</artifactId>
+
+    <properties>
+        <log.level.laxio>DEBUG</log.level.laxio>
+        <log.level.plugins>INFO</log.level.plugins>
+        <log.location>application.log</log.location>
+        <log.append>file, stdout</log.append>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>DEV</id>
+            <properties>
+                <log.level.laxio>DEBUG</log.level.laxio>
+            </properties>
+        </profile>
+        <profile>
+            <id>LIVE</id>
+            <properties>
+                <log.level.laxio>INFO</log.level.laxio>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <!-- LOGGING START -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <!-- LOGGING STOP -->
+        <!-- LAXIO START -->
+        <dependency>
+            <groupId>org.laxio</groupId>
+            <artifactId>laxio-api</artifactId>
+            <version>1.14.1-SNAPSHOT</version>
+        </dependency>
+        <!-- LAXIO STOP -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+</project>
