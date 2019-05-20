@@ -1,18 +1,15 @@
 package org.laxio.ignition;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
 import org.laxio.api.exception.ignition.IgnitionStartupException;
 import org.laxio.api.ignition.Ignitable;
 import org.laxio.api.ignition.Ignition;
+import org.laxio.ignition.scanner.IgnitionClassPathScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LaxioIgnition implements Ignition {
 
@@ -20,10 +17,13 @@ public class LaxioIgnition implements Ignition {
 
     private final LaxioIgnitionArguments arguments;
 
+    private final Set<Ignitable> ignitables;
+
     private File ignitablesDirectory;
 
     public LaxioIgnition(LaxioIgnitionArguments arguments) {
         this.arguments = arguments;
+        this.ignitables = new HashSet<>();
         load();
     }
 
@@ -51,70 +51,20 @@ public class LaxioIgnition implements Ignition {
         ignitablesDirectory = folder;
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     public void ignite() {
         if (arguments.isClassPathLoaded()) {
-            ClassPath classPath;
+            IgnitionClassPathScanner.scan(LaxioIgnition.class.getClassLoader(), ignitable -> {
+                LOGGER.info("Igniting '{}' v{}", ignitable.getDetails().getName(), ignitable.getDetails().getVersion());
 
-            try {
-                classPath = ClassPath.from(LaxioIgnitionStart.class.getClassLoader());
-            } catch (IOException ex) {
-                throw new IgnitionStartupException("Unable to load classes from classpath", ex);
-            }
-
-            ImmutableSet<ClassPath.ClassInfo> infos = classPath.getAllClasses();
-
-            for (ClassPath.ClassInfo info : infos) {
-                scan(info);
-            }
+                ignitable.ignite(this);
+                ignitables.add(ignitable);
+            });
         }
     }
 
-    @SuppressWarnings("UnstableApiUsage")
-    private void scan(ClassPath.ClassInfo info) {
-        String className = info.getName();
-
-        Class<?> clazz;
-
-        try {
-            clazz = Class.forName(className, false, LaxioIgnitionStart.class.getClassLoader());
-        } catch (Throwable ex) {
-            // something weird here
-            return;
-        }
-
-        if (Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())) {
-            return;
-        }
-
-        if (clazz != Ignitable.class && Ignitable.class.isAssignableFrom(clazz)) {
-            ignite(clazz);
-        }
-    }
-
-    private void ignite(Class<?> clazz) {
-        Constructor<?> constructor;
-
-        try {
-            constructor = clazz.getConstructor();
-        } catch (NoSuchMethodException ex) {
-            throw new IgnitionStartupException("Unable to find constructor for Ignitable", ex);
-        }
-
-        Object instance;
-
-        try {
-            instance = constructor.newInstance();
-        } catch (InstantiationException ex) {
-            throw new IgnitionStartupException("Exception thrown whilst constructing Ignitable", ex);
-        } catch (IllegalAccessException ex) {
-            throw new IgnitionStartupException("Unable to access constructor of Ignitable", ex);
-        } catch (InvocationTargetException ex) {
-            throw new IgnitionStartupException("Ignitable threw exception during construction", ex);
-        }
-
-        Ignitable ignitable = (Ignitable) instance;
-        ignitable.ignite(this);
+    @Override
+    public Set<Ignitable> getIgnitables() {
+        return ignitables;
     }
 
     @Override

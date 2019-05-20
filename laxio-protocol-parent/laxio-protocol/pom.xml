@@ -12,4 +12,12 @@
 
     <artifactId>laxio-protocol</artifactId>
     <version>1.14.1-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.laxio</groupId>
+            <artifactId>laxio-protocol-api</artifactId>
+            <version>1.14.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

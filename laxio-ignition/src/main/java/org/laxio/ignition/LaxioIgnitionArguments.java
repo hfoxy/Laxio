@@ -7,6 +7,9 @@ public class LaxioIgnitionArguments {
     public static String HELP_PARAMETER = "h";
 
     public static String CLASS_PATH_PARAMETER = "C";
+    public static String LOAD_IGNITABLES_DIRECTORY_PARAMETER = "i";
+    public static String DEFAULT_LOAD_IGNITABLES_DIRECTORY = "true";
+
     public static String IGNITABLES_DIRECTORY_PARAMETER = "I";
     public static String DEFAULT_IGNITABLES_DIRECTORY = "ignitables";
 
@@ -36,6 +39,17 @@ public class LaxioIgnitionArguments {
         return commandLine.getOptionValue(IGNITABLES_DIRECTORY_PARAMETER, DEFAULT_IGNITABLES_DIRECTORY);
     }
 
+    public boolean isIgnitablesDirectoryLoaded() {
+        String value = commandLine.getOptionValue(LOAD_IGNITABLES_DIRECTORY_PARAMETER, DEFAULT_LOAD_IGNITABLES_DIRECTORY);
+        if (value.equalsIgnoreCase("true")) {
+            return true;
+        } else if (value.equalsIgnoreCase("false")) {
+            return false;
+        }
+
+        throw new IllegalArgumentException("Value '" + value + "' cannot be converted: true/false required");
+    }
+
     private static Options buildOptions() {
         Options options = new Options();
 
@@ -59,10 +73,18 @@ public class LaxioIgnitionArguments {
         options.addOption(
                 Option.builder(IGNITABLES_DIRECTORY_PARAMETER)
                         .required(false)
-                        .valueSeparator()
                         .hasArgs()
                         .longOpt("ignitables-directory")
                         .desc("The directory that ignitables should be loaded from")
+                        .build()
+        );
+
+        options.addOption(
+                Option.builder(LOAD_IGNITABLES_DIRECTORY_PARAMETER)
+                        .required(false)
+                        .hasArg()
+                        .longOpt("load-ignitables")
+                        .desc("Defines if ignitables should be loaded or not")
                         .build()
         );
 

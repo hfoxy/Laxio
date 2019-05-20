@@ -39,6 +39,21 @@ class LaxioIgnitionArgumentsTest {
     }
 
     @Test
+    void loadIgnitablesDirectoryOption() throws ParseException {
+        LaxioIgnitionArguments arguments = loadArguments(createOption(LOAD_IGNITABLES_DIRECTORY_PARAMETER, "true"));
+        assertTrue(arguments.isIgnitablesDirectoryLoaded(), "Ignitables directory should be loaded when told to load");
+
+        arguments = loadArguments("");
+        assertTrue(arguments.isIgnitablesDirectoryLoaded(), "Ignitables directory should be loaded when no argument is provided");
+
+        arguments = loadArguments(createOption(LOAD_IGNITABLES_DIRECTORY_PARAMETER, "false"));
+        assertFalse(arguments.isIgnitablesDirectoryLoaded(), "Ignitables directory should not be loaded when told to not load");
+
+        arguments = loadArguments(createOption(LOAD_IGNITABLES_DIRECTORY_PARAMETER, "random"));
+        assertThrows(IllegalArgumentException.class, arguments::isIgnitablesDirectoryLoaded, "When a value not true/false is provided, exception should be thrown");
+    }
+
+    @Test
     void helpOption() throws ParseException {
         LaxioIgnitionArguments arguments = loadArguments(createOption(HELP_PARAMETER));
         assertTrue(arguments.isHelpRequested());
