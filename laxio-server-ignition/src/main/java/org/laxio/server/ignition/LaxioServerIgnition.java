@@ -4,10 +4,8 @@ import org.laxio.api.ignition.BasicIgnitableDetails;
 import org.laxio.api.ignition.Ignitable;
 import org.laxio.api.ignition.IgnitableDetails;
 import org.laxio.api.ignition.Ignition;
-import org.laxio.api.protocol.Connection;
-import org.laxio.api.protocol.Packet;
-import org.laxio.api.protocol.ProtocolAction;
-import org.laxio.protocol.action.KeepAliveAction;
+import org.laxio.server.LaxioManagedServer;
+import org.laxio.server.ignition.options.BasicManagedServerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,19 +31,9 @@ public class LaxioServerIgnition implements Ignitable {
     public void ignite(Ignition ignition) {
         LOGGER.info("Server ignited!");
 
-        Connection connection = new Connection() {
-            @Override
-            public void sendPacket(Packet packet) {
-                LOGGER.info("whatever");
-            }
+        LaxioManagedServer server = new LaxioManagedServer(ignition, new BasicManagedServerOptions("0.0.0.0", 25565));
 
-            @Override
-            public <T extends ProtocolAction<P>, P> void perform(Class<T> actionType, P params) {
-                LOGGER.info("bork");
-            }
-        };
-
-        connection.perform(KeepAliveAction.class, new KeepAliveAction.KeepAliveParams(System.currentTimeMillis()));
+        server.start();
     }
 
 }

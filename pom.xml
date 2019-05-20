@@ -16,6 +16,7 @@
         <module>laxio-protocol-parent</module>
         <module>laxio-ignition</module>
         <module>laxio-server-ignition</module>
+        <module>laxio-netty</module>
     </modules>
 
     <properties>

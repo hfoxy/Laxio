@@ -1,9 +1,10 @@
 package org.laxio.api.client;
 
-import org.laxio.api.ignition.Ignition;
+import org.laxio.api.ignition.Ignited;
+import org.laxio.api.protocol.connection.NetworkEntity;
 
-public interface Client {
+public interface Client extends Ignited {
 
-    Ignition getIgnition();
+    NetworkEntity getNetworkEntity();
 
 }
