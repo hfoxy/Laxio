@@ -15,6 +15,7 @@
         <module>laxio-client</module>
         <module>laxio-protocol-parent</module>
         <module>laxio-ignition</module>
+        <module>laxio-server-ignition</module>
     </modules>
 
     <properties>
@@ -32,6 +33,7 @@
         <slf4j.version>1.7.26</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <guava.version>27.1-jre</guava.version>
+        <commons.cli.version>1.4</commons.cli.version>
     </properties>
 
     <dependencies>

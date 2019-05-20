@@ -6,7 +6,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] [%thread] [%-40logger{50}]: %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] [%thread] [%-40logger{5}]: %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -21,7 +21,7 @@
             <maxFileSize>10MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] [%thread] [%-40logger{50}]: %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%-5level] [%thread] [%-40logger{5}]: %msg%n</pattern>
         </encoder>
     </appender>
 

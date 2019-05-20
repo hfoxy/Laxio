@@ -10,15 +10,25 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>laxio-server</artifactId>
-    <version>1.14.1-SNAPSHOT</version>
+    <artifactId>laxio-server-ignition</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.laxio</groupId>
+            <artifactId>laxio-ignition</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.laxio</groupId>
             <artifactId>laxio-api</artifactId>
             <version>1.14.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.laxio</groupId>
+            <artifactId>laxio-server</artifactId>
+            <version>1.14.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
